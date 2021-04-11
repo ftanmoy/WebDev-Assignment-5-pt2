@@ -10,8 +10,14 @@ function App() {
   useEffect(() => {
     const handleSearch = async () => {
         if (cityName === "") return;
-        
-        let linkToAPI = "https://ctp-zip-api.herokuapp.com/zip/" + cityName;
+
+        let linkToAPI = "https://ctp-zip-api.herokuapp.com/city/" + cityName;
+
+        let splitCity = cityName.toLowerCase().split(' ');
+        for(var i = 0; i < splitCity.length; i++) {
+          splitCity[i] = splitCity[i].charAt(0).toUpperCase() + splitCity[i].substring(1);
+        }
+        let capitalizeCity = splitCity.join(' ');
 
         try {
           let response = await axios.get(linkToAPI);
@@ -47,7 +53,7 @@ function App() {
       </div>
         <div id="search-box">
           <label>
-            Enter Zipcode: 
+            Enter Zipcode:
           </label>
           <input className="search-box-field" placeholder="Enter a zipcode!" type="text" onChange={handleChange} />
       </div>

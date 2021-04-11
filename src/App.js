@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     const handleSearch = async () => {
         if (cityName === "") return;
+        
         let linkToAPI = "https://ctp-zip-api.herokuapp.com/zip/" + cityName;
 
         try {

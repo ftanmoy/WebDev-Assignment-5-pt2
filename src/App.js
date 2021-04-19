@@ -43,6 +43,7 @@ function App() {
     //displaying the response to the user in readable format
     const generateCities = () => {
         return <City Key={cities.size} {...cities} />;
+        
     };
 
     //collecting all characters until user hits enter to call the api in search()

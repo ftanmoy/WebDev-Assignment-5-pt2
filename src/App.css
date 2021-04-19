@@ -8,6 +8,8 @@ body{
   margin: auto auto;
   background-repeat: no-repeat;
   background-size: cover;
+  background-image: url(./bg.png);
+  
 }
 h1{
   animation: bounceIn 0.75s;

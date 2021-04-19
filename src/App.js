@@ -59,9 +59,12 @@ function App() {
             setError("");
         }
         //resetting city so the page is reset and setting all user input characters to capital case and saving it.
-        if(input !== '')
-        {setCities([]);}
-        setCityName(input.toUpperCase());
+        if(input !== ''){
+          {setCities([]);}
+          setCityName(input.toUpperCase());
+        }
+        
+        
     }
     //user has to press enter to see results.
 

@@ -5,59 +5,87 @@ import './App.css';
 
 function App() {
   const [cityName, setCityName] = useState("");
-  const [cities, setCities] = useState([]);
+  const [input, setInput] = useState("");
+  const [cities, setCities] = useState("");
+    const [error, setError] = useState("");
 
-  useEffect(() => {
+
+
+    useEffect(() => {
     const handleSearch = async () => {
         if (cityName === "") return;
 
+        //creating a link to call the api
         let linkToAPI = "https://ctp-zip-api.herokuapp.com/city/" + cityName;
 
-        let splitCity = cityName.toLowerCase().split(' ');
-        for(var i = 0; i < splitCity.length; i++) {
-          splitCity[i] = splitCity[i].charAt(0).toUpperCase() + splitCity[i].substring(1);
-        }
-        let capitalizeCity = splitCity.join(' ');
-
         try {
+            //calling api
           let response = await axios.get(linkToAPI);
-          setCities(response.data);
+          //storing the response
+            setCities(response.data);
+
         } catch (error) {
           if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
+              //creating a child element to show the error message.
+              setError(error);
+              var para = document.createElement('P');
+              para.id = 'P'
+              para.innerHTML = 'Ooooppps ... ZipCode for city "' + cityName + '"  was ' + error.response.data + " : "
+                  + error.response.status;
+              return document.getElementById("results").appendChild(para);
           }
         }
       };
+
       handleSearch();
     }, [cityName]);
 
+    //displaying the response to the user in readable format
     const generateCities = () => {
-      return cities.map((city) => {
-        return <City key={city.RecordNumber} {...city} />;
-      });
+        return <City Key={cities.size} {...cities} />;
     };
 
+    //collecting all characters until user hits enter to call the api in search()
     const handleChange = (e) => {
-      // TODO: if input is not valid, print no results
-      //       reset the output if the input is changed after a successful search
-      setCityName(e.target.value)
+        setInput(e.target.value);
+
     }
+
+    // searching will reset all existing values and only hit the api once the user hits enter
+    const search = () => {
+        if( error !== '' && input !== ''){
+            var lastElement =  document.getElementById('P');
+            document.getElementById("results").removeChild(lastElement);
+            setError("");
+        }
+        //resetting city so the page is reset and setting all user input characters to capital case and saving it.
+        if(input !== '')
+        {setCities([]);}
+        setCityName(input.toUpperCase());
+    }
+    //user has to press enter to see results.
 
   return (
     <div id="content-wrapper">
       <div id="header">
         <div id="header-text">
-          <h1>Zip Code Search</h1>
+          <h1>Find the Zipcode for Your City</h1>
         </div>
       </div>
         <div id="search-box">
           <label>
-            Enter Zipcode:
+            Enter City:
           </label>
-          <input className="search-box-field" placeholder="Enter a zipcode!" type="text" onChange={handleChange} />
+          <input className="search-box-field" placeholder="Enter a City!" type="text" onChange={handleChange}
+                 onKeyPress={event => {
+              if (event.key === 'Enter') {
+                  search()
+              }
+          }}/>
       </div>
+        <div id="results">
       {generateCities()}
+    </div>
     </div>
   );
 }

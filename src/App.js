@@ -6,10 +6,8 @@ import './App.css';
 function App() {
   const [cityName, setCityName] = useState("");
   const [input, setInput] = useState("");
-  const [cities, setCities] = useState("");
+  const [cities, setCities] = useState([]);
     const [error, setError] = useState("");
-
-
 
     useEffect(() => {
     const handleSearch = async () => {
@@ -42,12 +40,16 @@ function App() {
 
     //displaying the response to the user in readable format
     const generateCities = () => {
-        return <City Key={cities.size} {...cities} />;
+       return  <City key={cities.length} value={cities}/>;
     };
 
     //collecting all characters until user hits enter to call the api in search()
     const handleChange = (e) => {
         setInput(e.target.value);
+        //resetting city so the page is reset and setting all user input characters to capital case and saving it.
+        setCities([]);
+        setCityName("");
+
 
     }
 
@@ -58,10 +60,9 @@ function App() {
             document.getElementById("results").removeChild(lastElement);
             setError("");
         }
-        //resetting city so the page is reset and setting all user input characters to capital case and saving it.
-        if(input !== '')
-        {setCities([]);}
+
         setCityName(input.toUpperCase());
+        
     }
     //user has to press enter to see results.
 

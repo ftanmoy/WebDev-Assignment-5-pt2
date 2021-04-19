@@ -6,8 +6,12 @@ body{
   text-align: center;
   width: 980px;
   margin: auto auto;
+  background: no-repeat center fixed;
+  background-size: cover;
   background-repeat: no-repeat;
   background-size: cover;
+  background-image: url(./bg.png);
+  
 }
 h1{
   animation: bounceIn 0.75s;

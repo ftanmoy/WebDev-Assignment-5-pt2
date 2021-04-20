@@ -6,6 +6,7 @@ body{
   text-align: center;
   width: 980px;
   margin: auto auto;
+  background: no-repeat center fixed;
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url(./bg.png);
